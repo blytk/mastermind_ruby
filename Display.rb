@@ -1,7 +1,9 @@
 # Display class, to handle printing related tasks
 class Display
-@@red_pin = "red pin"
-@@white_pin = "white pin"
+  @@red_pin = "red pin"
+  @@white_pin = "white pin"
+
+  # Class methods
   def self.print_pins(pins_array)
     puts ""
     puts "PINS"
@@ -30,5 +32,3 @@ class Display
 
 end
 
-Display.print_pins([1, 2, 2, 1])
-Display.print_message("TESTING MESSAGE")

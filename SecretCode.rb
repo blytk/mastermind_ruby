@@ -1,11 +1,28 @@
+require_relative "Display"
+
 # Class for the secret code the player needs to guess
 class SecretCode
+
   # SecretCode class variables
-  # Represent the pins
   @@CORRECT_CORRECT_POSITION_PIN = 1
   @@CORRECT_WRONG_POSITION_PIN = 2
+  @@NUMBER_OF_COLORS = 4
+  @@VALID_COLORS = ["white", "black",  "red", "green"]
 
-  # color instance variables
+  def self.valid_colors
+    @@VALID_COLORS
+  end
+
+  def self.number_of_colors
+    @@NUMBER_OF_COLORS
+  end
+
+  def self.available_colors
+    print "Available colors are: "
+    print "#{@@VALID_COLORS} \n" 
+  end
+
+  # color instance variables (colors of the secret code, and the feedback pins)
   attr_accessor :colors, :pins
 
   def initialize(color1, color2, color3, color4)  
@@ -14,21 +31,45 @@ class SecretCode
   end
 
   def create_feedback_pins(guess_array)
-    guess_array.each_with_index do |guess, guess_index|
+    # colors_to_compare is a secondary to avoid duplicity in include comparisons (not for direct comparisons)
+    # to avoid duplicate white pins
+    colors_to_compare = @colors.dup
 
+    p colors_to_compare
+
+    guess_array.each_with_index do |guess, guess_index|
       # correct guess in correct position?
       if guess == @colors[guess_index]
         @pins.push(@@CORRECT_CORRECT_POSITION_PIN)
-      # correct guess but in different position?
-      elsif @colors.include?(guess)
-        @pins.push(@@CORRECT_WRONG_POSITION_PIN)
+        colors_to_compare.delete_at(colors_to_compare.index(guess))
       end
-
+      # correct guess but in different position?
     end
+
+    p "colors_to_compare should be black, black"
+    p "it is #{colors_to_compare}"
+
+    guess_array.each_with_index do |guess, guess_index|
+      if colors_to_compare.include?(guess)
+        @pins.push(@@CORRECT_WRONG_POSITION_PIN)
+        colors_to_compare.delete_at(colors_to_compare.index(guess))
+      end
+    end
+
+    print_pins
+
+  end
+
+  def print_pins
+    Display.print_pins(@pins)
   end
 
 end
 
+=begin
 secret = SecretCode.new("white", "blue", "orange", "red")
 secret.create_feedback_pins(["red", "orange", "blue", "white"])
 p secret
+
+SecretCode.valid_colors
+=end

@@ -31,28 +31,27 @@ class SecretCode
   end
 
   def create_feedback_pins(guess_array)
+    @pins = []
     # colors_to_compare is a secondary to avoid duplicity in include comparisons (not for direct comparisons)
     # to avoid duplicate white pins
     colors_to_compare = @colors.dup
-
-    p colors_to_compare
 
     guess_array.each_with_index do |guess, guess_index|
       # correct guess in correct position?
       if guess == @colors[guess_index]
         @pins.push(@@CORRECT_CORRECT_POSITION_PIN)
-        colors_to_compare.delete_at(colors_to_compare.index(guess))
+        colors_to_compare[guess_index] = nil
+        # colors_to_compare.delete_at(colors_to_compare.index(guess))
       end
-      # correct guess but in different position?
     end
 
-    p "colors_to_compare should be black, black"
-    p "it is #{colors_to_compare}"
-
+    # correct guess but in different position?
+    
     guess_array.each_with_index do |guess, guess_index|
-      if colors_to_compare.include?(guess)
+      if guess != @colors[guess_index] && colors_to_compare.include?(guess)
         @pins.push(@@CORRECT_WRONG_POSITION_PIN)
-        colors_to_compare.delete_at(colors_to_compare.index(guess))
+        # colors_to_compare.delete_at(colors_to_compare.index(guess))
+        colors_to_compare[colors_to_compare.index(guess)] = nil
       end
     end
 

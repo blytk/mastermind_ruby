@@ -7,7 +7,7 @@ class SecretCode
   @@CORRECT_CORRECT_POSITION_PIN = 1
   @@CORRECT_WRONG_POSITION_PIN = 2
   @@NUMBER_OF_COLORS = 4
-  @@VALID_COLORS = ["white", "black",  "red", "green"]
+  @@VALID_COLORS = ["black", "blue", "green", "red", "white", "yellow"]
 
   def self.valid_colors
     @@VALID_COLORS
@@ -25,9 +25,16 @@ class SecretCode
   # color instance variables (colors of the secret code, and the feedback pins)
   attr_accessor :colors, :pins
 
-  def initialize(color1, color2, color3, color4)  
-    @colors = [color1, color2, color3, color4]
-    @pins = []
+  def initialize(who_creates_code)  
+    @colors = []
+    @pins = []  
+    if who_creates_code == "player"
+      player_sets_colors_array
+    else
+      computer_sets_colors_array
+    end
+
+    
   end
 
   def create_feedback_pins(guess_array)
@@ -63,12 +70,26 @@ class SecretCode
     Display.print_pins(@pins)
   end
 
+  # Method to allow the user to create the secret color code
+  def player_sets_colors_array
+    SecretCode.available_colors
+    color_to_insert = nil
+    @@NUMBER_OF_COLORS.times do |i|
+      Display.print_message("Enter color number #{i + 1}: ")
+      while !@@VALID_COLORS.include?(color_to_insert)
+        color_to_insert = gets.chomp.downcase
+      end
+      @colors.push(color_to_insert)
+      color_to_insert = nil
+    end
+    Display.print_player_color_selection(@colors)
+  end
+
+  # Method to randomly create the secret color code
+  def computer_sets_colors_array
+    @@NUMBER_OF_COLORS.times do
+      @colors.push(@@VALID_COLORS[rand(@@VALID_COLORS.length)])
+    end
+  end
+
 end
-
-=begin
-secret = SecretCode.new("white", "blue", "orange", "red")
-secret.create_feedback_pins(["red", "orange", "blue", "white"])
-p secret
-
-SecretCode.valid_colors
-=end

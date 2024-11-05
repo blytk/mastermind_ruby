@@ -42,5 +42,18 @@ class Player
             end
         end
     end
+
+    def generate_computer_guess
+        # reset @colors array each time before guess
+        @colors = []
+        # Message
+        Display.print_message("Turn ##{@@GUESSES - @guesses + 1}. The computer is guessing...")
+        # Push guesses into colors array
+        while @colors.length != SecretCode.number_of_colors
+          @colors.push(SecretCode.valid_colors[rand(SecretCode.valid_colors.length)])
+        end
+        Display.print_computer_color_selection(@colors)
+    end
+
 end
 

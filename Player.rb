@@ -5,12 +5,14 @@ require_relative "Display"
 class Player
     # How many guesses before the game is over?
     @@GUESSES = 12
+    
 
-    attr_accessor :guesses, :colors
+    attr_accessor :guesses, :colors, :immutable_indexes
 
     def initialize
         @guesses = @@GUESSES
         @colors = []
+        @immutable_indexes =  []
     end
 
     # Get input from the player
@@ -43,17 +45,59 @@ class Player
         end
     end
 
-    def generate_computer_guess
-        # reset @colors array each time before guess
-        @colors = []
-        # Message
-        Display.print_message("Turn ##{@@GUESSES - @guesses + 1}. The computer is guessing...")
-        # Push guesses into colors array
-        while @colors.length != SecretCode.number_of_colors
-          @colors.push(SecretCode.valid_colors[rand(SecretCode.valid_colors.length)])
+    def generate_computer_guess(player, code, feedback_pins)
+        # Implement feedback
+        # if feedback_pins empty
+        p @immutable_indexes
+        if feedback_pins.length <= 0
+              # reset @colors array no previous color was correct
+              @colors = []
+              # Populate all elements of @colors with random values
+              SecretCode.number_of_colors.times do 
+                @colors.push(SecretCode.valid_colors[rand(SecretCode.valid_colors.length)])
+              end
+        else
+            feedback_pins.each do |pin|
+                if pin == 1 #red pin is 1, white pin is 2
+                  @colors.each_with_index do |color, index|
+                    if @colors[index] == code.colors[index]
+                        # make it so this color won't change
+                        # @colors at these indexes should never change
+                        if !@immutable_indexes.include?(index)
+                            @immutable_indexes.push(index)
+                        end
+                    end    
+                  end
+
+                end
+            end
+
+            @colors.each_with_index do |color, index|
+                if @immutable_indexes.include?(index)
+                  next
+                else
+                    @colors[index] = SecretCode.valid_colors.sample
+                end
+            end
         end
-        Display.print_computer_color_selection(@colors)
+
+
+  
+          # Message
+          Display.print_message("Turn ##{@@GUESSES - @guesses + 1}. The computer is guessing...")
+
+ #         # Push guesses into colors array
+ #         while @colors.length != SecretCode.number_of_colors
+ #           @colors.push(SecretCode.valid_colors[rand(SecretCode.valid_colors.length)])
+ #         end
+  
+          
+  
+          Display.print_computer_color_selection(@colors)
+  
     end
 
 end
+    
+
 

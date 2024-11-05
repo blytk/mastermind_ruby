@@ -63,6 +63,8 @@ class SecretCode
     end
 
     print_pins
+    # return the pins array for feedback (computer_guesses)
+    pins
 
   end
 

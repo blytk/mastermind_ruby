@@ -5,6 +5,8 @@ require_relative "Display"
 require_relative "Player"
 require_relative "GameOptions"
 
+pins = nil
+
 # player guesses the code
 def player_guesses(player, code)
   # remove
@@ -25,18 +27,12 @@ end
 
 # computer guesses the code
 def computer_guesses(player, code)
-  
-    player.generate_computer_guess
-    code.create_feedback_pins(player.colors)
-    
+    pins = code.create_feedback_pins(player.colors)
+    player.generate_computer_guess(player, code, pins)
     player.guesses -= 1
-
     Display.print_message("Computer guess is #{player.colors}")
     # The computer needs some kind of logic to handle the feedback (pins)
     # and adjust its next response
-    
-
-  
 end
 
 # Game ending conditions

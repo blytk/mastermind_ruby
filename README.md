@@ -20,7 +20,7 @@ After each guess attempt, **pins** will indicate how close the guess is:
 - **Red Pin**: One of the guessed colors is in the correct position and matches a color in the code.
 - **White Pin**: One of the guessed colors is in the code but is not in the correct position.
   
-> **Note**: The order of the pins does not correspond to the positions of the guessed colors.
+> **Note**: The order of the pins does not correspond to the positions of the guessed colors (e.g., a red pin in first position does not mean that the first guessed color is correct and is in the correct position, but that one of the guessed colors is correct and is in the correct position).
 
 ## How to Run
 

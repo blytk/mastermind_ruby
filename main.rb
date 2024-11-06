@@ -5,8 +5,6 @@ require_relative "Display"
 require_relative "Player"
 require_relative "GameOptions"
 
-pins = nil
-
 # player guesses the code
 def player_guesses(player, code)
   # remove
@@ -49,23 +47,57 @@ def game_over?(player, code)
   end
 end
 
+
 # Initialize game options
-game_options = GameOptions.new
+def new_game
+  # Initialize
+  game_options = GameOptions.new
+  # Create code (player or computer, depending on the GameOptions object)
+  code = SecretCode.new(game_options.who_creates_code)
+  player = Player.new  
 
-# Create code (player or computer, depending on the GameOptions object)
-code = SecretCode.new(game_options.who_creates_code)
-player = Player.new
+  # Game loop
 
-while !game_over?(player, code)
-  if game_options.who_creates_code == "player"
-    # computer guesses colors flow
-    computer_guesses(player, code)
-  else
-    # player guesses colors
-    player_guesses(player,code)
+  while !game_over?(player, code)
+    if game_options.who_creates_code == "player"
+      # computer guesses colors flow
+      computer_guesses(player, code)
+    else
+      # player guesses colors
+      player_guesses(player,code)
+    end
+  
+    if player.colors == code.colors
+      Display.print_message("||||| Correct combination found |||||")
+    end
   end
 
-  if player.colors == code.colors
-    Display.print_message("||||| Correct combination found |||||")
+end
+
+def new_game?
+  Display.print_message("Do you want to play again? (y/n)")
+  answer = nil
+  while !["y", "Y", "n", "N",].include?(answer)
+    answer = gets.chomp.downcase
+  end
+
+  if answer == "y"
+    return true
+  else
+    return false
   end
 end
+
+# New game / repeat or exit loop
+def game_loop
+  new_game
+  while true
+    if new_game?
+      new_game
+    else
+      return false
+    end
+  end
+end
+
+game_loop

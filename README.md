@@ -11,7 +11,7 @@ Mastermind is a code-breaking game where players either guess a color code gener
 - The game involves six colors: **black**, **blue**, **green**, **red**, **white**, and **yellow**.
 - The program enforces valid color choices, so players cannot select colors outside this set.
   
-Players try to guess the code within a set number of attempts. After each guess, the game provides feedback through color-coded pins, which offer hints about the accuracy of the guess.
+Players try to guess the code within a set number of attempts (12). After each guess, the game provides feedback through color-coded pins, which offer hints about the accuracy of the guess.
 
 ### Feedback Pins
 
@@ -26,6 +26,7 @@ After each guess attempt, **pins** will indicate how close the guess is:
 
 1. Clone the repository to your local machine.
 2. Navigate to the project directory.
-3. Install required gems ("colorize"): bundle install
-3. ruby main.rb
+3. Install bundler if not installed already: gem install bundler
+4. Install required gems ("colorize") running the command: bundle install
+5. ruby main.rb
 

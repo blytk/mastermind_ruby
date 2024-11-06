@@ -7,7 +7,7 @@ class SecretCode
   @@CORRECT_CORRECT_POSITION_PIN = 1
   @@CORRECT_WRONG_POSITION_PIN = 2
   @@NUMBER_OF_COLORS = 4
-  @@VALID_COLORS = ["black", "blue", "green", "red", "white", "cyan", "yellow"]
+  @@VALID_COLORS = ["black", "blue", "green", "red", "white", "yellow"]
 
   def self.valid_colors
     @@VALID_COLORS

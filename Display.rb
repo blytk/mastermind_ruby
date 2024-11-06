@@ -33,6 +33,10 @@ class Display
     puts "------------------------------------------------------------------------------------------------------------------"
   end
 
+  def self.print_small_message(message)
+    print message + "\n"
+  end
+
   def self.print_player_color_selection(color_array)
     puts ""
     puts "The colors you have selected are: "
@@ -57,6 +61,15 @@ class Display
     end
     puts
     puts "------------------------------------------------------------------------------------------------------------------"
+  end
+
+  def self.print_available_colors(color_array)
+    puts "Available colors are: "
+    color_array.each do |color|
+      print color.colorize(:"#{color}")
+      print " | "
+    end
+    puts
   end
 
 end

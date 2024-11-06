@@ -18,8 +18,9 @@ class SecretCode
   end
 
   def self.available_colors
-    print "Available colors are: "
-    print "#{@@VALID_COLORS} \n" 
+    # print "Available colors are: "
+    # print "#{@@VALID_COLORS} \n" 
+    Display.print_available_colors(valid_colors)
   end
 
   # color instance variables (colors of the secret code, and the feedback pins)

@@ -30,9 +30,10 @@ class Player
         @colors = []
         # Message
         Display.print_message("Turn ##{@@GUESSES - @guesses + 1}")
+        Display.print_available_colors(SecretCode.valid_colors)
         # Logic to compare player input against code
         while @colors.length != SecretCode.number_of_colors
-            Display.print_message("Enter color number #{i}: ")
+            Display.print_small_message("Enter color number #{i}: ")
             color = gets.chomp
             color = color.downcase
             if !SecretCode.valid_colors.include?(color)
@@ -48,7 +49,7 @@ class Player
     def generate_computer_guess(player, code, feedback_pins)
         # Implement feedback
         # if feedback_pins empty
-        p @immutable_indexes
+        # p @immutable_indexes
         if feedback_pins.length <= 0
               # reset @colors array no previous color was correct
               @colors = []
@@ -91,7 +92,6 @@ class Player
  #           @colors.push(SecretCode.valid_colors[rand(SecretCode.valid_colors.length)])
  #         end
   
-          
   
           Display.print_computer_color_selection(@colors)
   

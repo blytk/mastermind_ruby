@@ -12,14 +12,13 @@ def player_guesses(player, code)
   # remove
   # remove
   # remove
-  p code.colors
   while !game_over?(player, code)
     # Take input from the player
     player.take_player_input
     # Generate feedback with pins
     code.create_feedback_pins(player.colors)
     # Show secret code for testing purposes
-    Display.print_computer_color_selection(code.colors)
+    # Display.print_computer_color_selection(code.colors)
     player.guesses -= 1
     # If player guesses correct code in order, win
   end
@@ -30,9 +29,13 @@ def computer_guesses(player, code)
     pins = code.create_feedback_pins(player.colors)
     player.generate_computer_guess(player, code, pins)
     player.guesses -= 1
-    Display.print_message("Computer guess is #{player.colors}")
-    # The computer needs some kind of logic to handle the feedback (pins)
-    # and adjust its next response
+    # Display.print_message("Computer guess is #{player.colors}")
+    # player must press key to continue
+    if player.guesses != 0 
+      Display.print_message("Press any key for the computer to play the next turn.")
+    end
+    gets
+
 end
 
 # Game ending conditions
